@@ -47,9 +47,9 @@ function NavBar() {
                                     <Link to='/friends' onClick={()=>setActiveLink('/friends')}   className={activeLink =='/friends' ? "border-b-2 text-[#2792FF] border-b-[#2792FF] font-medium":'opacity-75 hover:opacity-100'} >Friends</Link>
                                 </div>
                                 <div className="relative flex items-center justify-between">
-                                    <text className="mr-2">
+                                    <div className="mr-2">
                                         Hi! <span className="opacity-75">{user?.firstName}</span>
-                                    </text>
+                                    </div>
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto  sm:pr-0">
                                         {/* Profile dropdown */}
                                         <Menu as="div" className="relative ">
