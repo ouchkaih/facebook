@@ -13,7 +13,7 @@ export const UserReducer = createSlice(
         name:'user', 
         initialState,
         reducers:{
-            getDate : (state, action)=>{
+            getData : (state, action)=>{
                 state.user = action.payload
             },
             getErrors : (state, action)=>{
@@ -25,8 +25,14 @@ export const UserReducer = createSlice(
 
 
 export const getUser = ()=>async(dispatch)=>{
-    const response = await axios.get('/user');
-    dispatch(getDate(response.data.user))
+    await csrf()
+    try{
+        const response = await axios.get('api/user');
+        console.log(response)
+    }catch(error){
+        console.log()
+        dispatch(getData(error.response.data.message))
+    }
 }
 
 export const Login = (data)=>async(dispatch)=>{
@@ -57,5 +63,5 @@ const logout = ()=>async()=>{
     }
 }
 
-export const {getDate, getErrors} = UserReducer.actions
+export const {getData, getErrors} = UserReducer.actions
 export default UserReducer.reducer

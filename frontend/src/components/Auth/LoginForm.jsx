@@ -1,11 +1,13 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import {Login} from '../../redux/Reducers/UserReducer'
+import { Link, useNavigate } from "react-router-dom"
+import {Login, getUser} from '../../redux/Reducers/UserReducer'
 function LoginForm() {
   const [userData , setUserData ] = useState()
   const errors = useSelector(state=> state.user.errors)
+  const user = useSelector(state=> state.user.user)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handlChange = (e)=>{
     setUserData(
       (oldData)=>(
@@ -17,14 +19,28 @@ function LoginForm() {
     )
   }
   
+  useEffect(()=>{
+    if(!user){
+      dispatch(getUser())
+    }
+  },[])
+
+  useEffect(()=>{
+    if(user && user != 'Unauthenticated.'){
+      navigate('/')
+    }
+  }, [user])
+
+
   const handlSubmit = (e)=>{
     e.preventDefault()
     const formData = new FormData()
     formData.append('email' , userData?.email || '')
     formData.append('password' , userData?.password || '')
     dispatch(Login(formData))
-
   }
+
+
   return (
     <div className="flex items-center h-full mt-16" >
       <div className="w-full flex justify-center items-center">
@@ -34,16 +50,16 @@ function LoginForm() {
           </div>
           <div className="">
             <label htmlFor="">Email :</label>
-            <input type="email" onChange={handlChange}  name="email" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="" />
-            <span className="text-red-500">
+            <input type="email" onChange={handlChange}  name="email" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="email" />
+            <span className="text-red-400">
               {errors?.email}
             </span>
           </div>
 
           <div className="mt-6">
             <label htmlFor="">Password :</label>
-            <input type="password" onChange={handlChange}  name="password" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="" />
-            <span className="text-red-500">
+            <input type="password" onChange={handlChange}  name="password" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="password" />
+            <span className="text-red-400">
               {errors?.password}
             </span>
           </div>

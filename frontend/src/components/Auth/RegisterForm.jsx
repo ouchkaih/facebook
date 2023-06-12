@@ -42,7 +42,7 @@ function RegisterForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="">
               <label htmlFor="">First Name</label>
-              <input type="firstName" placeholder="john" onChange={handlChange}  name="firstName" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="firstName" />
+              <input type="firstName" placeholder="john" onChange={handlChange}  name="firstName" className="w-full md:w-60 block mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="firstName" />
               <span className="text-red-400">
                 {
                   errors?.firstName
@@ -53,7 +53,7 @@ function RegisterForm() {
 
             <div className="">
               <label htmlFor="">Last Name </label>
-              <input type="lastName" onChange={handlChange}  name="lastName" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="lastName" />
+              <input type="lastName" onChange={handlChange}  name="lastName" className="w-full md:w-60 block mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="lastName" />
               <span className="text-red-400">
                 {
                   errors?.lastName
