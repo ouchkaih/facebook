@@ -1,9 +1,10 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-
+import {Login} from '../../redux/Reducers/UserReducer'
 function LoginForm() {
   const [userData , setUserData ] = useState()
+  const errors = useSelector(state=> state.user.errors)
   const dispatch = useDispatch()
   const handlChange = (e)=>{
     setUserData(
@@ -33,16 +34,22 @@ function LoginForm() {
           </div>
           <div className="">
             <label htmlFor="">Email :</label>
-            <input type="email" onChange={handlChange} required name="email" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="" />
+            <input type="email" onChange={handlChange}  name="email" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="" />
+            <span className="text-red-500">
+              {errors?.email}
+            </span>
           </div>
 
           <div className="mt-6">
             <label htmlFor="">Password :</label>
-            <input type="password" onChange={handlChange} required name="password" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="" />
+            <input type="password" onChange={handlChange}  name="password" className="w-full mt-2 px-2 dark:bg-gray-700 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-[#2792FF]"  id="" />
+            <span className="text-red-500">
+              {errors?.password}
+            </span>
           </div>
 
           <div className="mt-6">
-            <input type="submit" className="w-full py-2 rounded-lg bg-[#2792FF] " value="Login"/>
+            <input type="submit" className="w-full cursor-pointer py-2 rounded-lg bg-[#2792FF] " value="Login"/>
             <div className="mt-4 text-center">
               <span>You don't have account?</span>
               <Link to="/register" className="text-[#2792FF]"> Register </Link>

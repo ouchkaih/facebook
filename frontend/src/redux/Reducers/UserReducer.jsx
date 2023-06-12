@@ -30,22 +30,21 @@ export const getUser = ()=>async(dispatch)=>{
 }
 
 export const Login = (data)=>async(dispatch)=>{
+    await csrf()
     try{
         await axios.post('/login' , data);
         getUser()
     }catch(errors){
-        dispatch(getErrors(errors.data.errors))
+        dispatch(getErrors(errors.response.data.errors))
     }    
 }
 
 export const Register = (data)=>async(dispatch)=>{ 
-    
     await csrf()
     try{
         await axios.post('/register' , data);
        getUser()
     }catch(errors){
-        console.log(errors)
         dispatch(getErrors(errors.response.data.errors))
     }    
 }
