@@ -5,9 +5,19 @@ import { Link, useNavigate } from "react-router-dom"
 import {TbPhotoPlus} from "react-icons/tb"
 import Header from "./posts/header"
 import AddPost from "./posts/AddPost"
+import { fetchData } from "../../redux/Reducers/PostReducer"
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button
+} from "@material-tailwind/react";
 
 function Home() {
   const user = useSelector(state=> state.user.user)
+  const posts = useSelector(state=> state.post.posts)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -19,6 +29,13 @@ function Home() {
     }
   },[user])
 
+
+  useEffect(()=>{
+    if(!posts){
+      dispatch(fetchData())
+    }
+  },[])
+
   return (
     user ? (
       <div>
@@ -26,10 +43,26 @@ function Home() {
           <div className="col-span-1 bg-white dark:bg-gray-800">
             hello
           </div>
-          <div className="col-span-3 flex justify-center bg-white dark:bg-gray-800">
+          <div className="col-span-3 pt-5 px-6 flex justify-center bg-white dark:bg-gray-800">
             <div className="w-full">
               <Header user={user}/>
               <AddPost/>
+              <div>
+                {
+                  posts && posts.map((post)=>(
+                    <div key={post.id} className="rounded-lg m-3">
+                      <div className="rounded-lg w-full h-96 overflow-hidden bg-cover" >
+                      <img src={`./images/posts/${post.picture}`} alt="" />
+                      </div>
+                      <div>
+                        {
+                          post.picture
+                        }
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
             </div>
           </div>
           <div className="col-span-1 bg-white dark:bg-gray-800">

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use pp\Http\Controllers\PostsController;
+use App\Http\Controllers\PostsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes

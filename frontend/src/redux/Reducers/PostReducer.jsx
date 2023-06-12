@@ -13,7 +13,7 @@ export const PostReducer = createSlice({
     reducers: 
     {
         getData : (state, action)=>{
-            state.posts = action.payload
+            state.posts = action.payload.posts
         },
         handlErrors : (state, action )=>{
             state.errors = action.payload
