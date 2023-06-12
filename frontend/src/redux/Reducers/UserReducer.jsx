@@ -56,7 +56,8 @@ export const Register = (data)=>async(dispatch)=>{
     }    
 }
 
-export const Logout = ()=>async()=>{
+export const Logout = ()=>async(dispatch)=>{
+    dispatch(getData(null))
     await csrf()
     try{
         await axios.post('/logout');
