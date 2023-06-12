@@ -69,7 +69,7 @@ function AddPost() {
 
                                 <div className="mt-5">
                                   <label htmlFor="">Description</label>
-                                  <textarea name="description" onChange={handlChange} className="w-full rounded-md bg-gray-300 dark:bg-gray-700 border border-gray-400 px-2 py-1 focus:border-[#2792FF] focus:outline-none "  id="" cols="30" rows="10"></textarea>
+                                  <textarea name="description" rows="6" onChange={handlChange} className="w-full rounded-md bg-gray-300 dark:bg-gray-700 border border-gray-400 px-2 py-1 focus:border-[#2792FF] focus:outline-none "  id="" cols="30"></textarea>
                                   <span className="text-red-400">
                                     {errors?.description}
                                   </span>

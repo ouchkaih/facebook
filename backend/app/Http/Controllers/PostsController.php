@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -43,9 +45,33 @@ class PostsController extends Controller
                 [
                     'success'=> false,
                     'errors' =>$validation->errors()
-                ], 422
+                ], 400
             );
         }
+
+        if($request->hasFile('picture')){
+            $image = $request->file('picture');
+            if($image->isValid()){
+                $imagePath = $image->getClientOriginalName();
+                $image->move('D:\New folder\New folder\New folder\programming\Projects\facebook\frontend\public\images\posts', $imagePath);
+            }else {
+                return response()->json(['error' => 'Invalid file'], 400);
+            }
+        } else {
+            return response()->json(['error' => 'No image uploaded', 'picture' => $request->picture], 400);
+        }
+
+        $data = $request->all();
+        $data['picture'] = $imagePath;
+        $data['userId'] = Auth::user()->id;
+        Post::create($data);
+        return response()->json(
+            [
+                'success' => true
+            ], 200
+        );
+
+
     }
 
     /**
