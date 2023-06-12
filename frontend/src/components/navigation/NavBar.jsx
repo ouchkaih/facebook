@@ -61,10 +61,10 @@ function NavBar() {
     ): (
         <div className='grid grid-cols-2'>
             <div className="flex justify-center items-center">
-                <Link className="px-4 font-medium py-1 bg-[#2792FF] rounded-lg">SignUp</Link>
+                <Link to="/register" className="px-4 font-medium py-1 bg-[#2792FF] rounded-lg">SignUp</Link>
             </div>
             <div className="flex justify-center items-center">
-                <Link className="px-4 font-medium py-1 text-[#2792FF] border-2 border-[#2792FF] rounded-lg ">SignIn</Link>
+                <Link to="/login" className="px-4 font-medium py-1 text-[#2792FF] border-2 border-[#2792FF] rounded-lg ">SignIn</Link>
             </div>
         </div>
     )

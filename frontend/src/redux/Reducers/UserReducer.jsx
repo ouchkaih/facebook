@@ -5,6 +5,9 @@ const initialState = {
     user : null,
     errors : []
 }
+
+const csrf = () => axios.get('sanctum/csrf-cookie') 
+
 export const UserReducer = createSlice(
     {
         name:'user', 
@@ -21,12 +24,12 @@ export const UserReducer = createSlice(
 )
 
 
-const getUser = ()=>async(dispatch)=>{
-    const responce = await axios.get('/user');
-    dispatch(getDate(responce.data.user))
+export const getUser = ()=>async(dispatch)=>{
+    const response = await axios.get('/user');
+    dispatch(getDate(response.data.user))
 }
 
-const Login = (data)=>async(dispatch)=>{
+export const Login = (data)=>async(dispatch)=>{
     try{
         await axios.post('/login' , data);
         getUser()
@@ -35,12 +38,15 @@ const Login = (data)=>async(dispatch)=>{
     }    
 }
 
-const Register = (data)=>async(dispatch)=>{
+export const Register = (data)=>async(dispatch)=>{ 
+    
+    await csrf()
     try{
         await axios.post('/register' , data);
        getUser()
     }catch(errors){
-        dispatch(getErrors(errors.data.errors))
+        console.log(errors)
+        dispatch(getErrors(errors.response.data.errors))
     }    
 }
 
