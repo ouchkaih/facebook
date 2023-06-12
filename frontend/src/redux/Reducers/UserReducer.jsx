@@ -29,6 +29,7 @@ export const getUser = ()=>async(dispatch)=>{
     try{
         const response = await axios.get('api/user');
         dispatch(getData(response.data))
+        console.log(response.data)
     }catch(error){
         console.log()
         dispatch(getData(error.response.data.message))
@@ -39,7 +40,7 @@ export const Login = (data)=>async(dispatch)=>{
     await csrf()
     try{
         await axios.post('/login' , data);
-        getUser()
+        dispatch(getUser())
     }catch(errors){
         dispatch(getErrors(errors.response.data.errors))
     }    
@@ -55,7 +56,8 @@ export const Register = (data)=>async(dispatch)=>{
     }    
 }
 
-const logout = ()=>async()=>{
+export const Logout = ()=>async()=>{
+    await csrf()
     try{
         await axios.post('/logout');
     }catch(errors){

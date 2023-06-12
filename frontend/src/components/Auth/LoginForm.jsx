@@ -19,16 +19,14 @@ function LoginForm() {
     )
   }
   
-  useEffect(()=>{
-    if(!user){
-      dispatch(getUser())
-    }
-  },[])
 
   useEffect(()=>{
     if(user && user != 'Unauthenticated.'){
       navigate('/')
+    }else if(!user){
+      dispatch(getUser())
     }
+    console.log(user)
   }, [user])
 
 
