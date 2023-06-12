@@ -28,7 +28,7 @@ export const getUser = ()=>async(dispatch)=>{
     await csrf()
     try{
         const response = await axios.get('api/user');
-        console.log(response)
+        dispatch(getData(response.data))
     }catch(error){
         console.log()
         dispatch(getData(error.response.data.message))
