@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostsController;
+use pp\Http\Controllers\PostsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,8 +18,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('posts', PostsController::class );
 Route::middleware(['auth'])->group( function(){
+    Route::resource('posts', PostsController::class );
 });
 
 // Route::resource('posts', PostsController::class )->middleware('auth');

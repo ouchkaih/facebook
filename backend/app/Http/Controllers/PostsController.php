@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,39 @@ class PostsController extends Controller
     public function index()
     {
         //
+
+        // get the post of user friends
+        $posts = DB::table('posts')
+            ->join('users' ,'users.id', "=", 'posts.userId' )
+            ->join('friends', function ($join) {
+                $join->on('friends.userId1', '=' , 'users.id')
+                     ->orWhere('friends.userId2', '=' , 'users.id');
+            })
+            ->where('users.id' , "<>", Auth::user()->id)
+            ->select('posts.*')
+            ->get();
+
+
+        // get the user posts
+        $postsUser = DB::table('posts')
+            ->join('users' ,'users.id', "=", 'posts.userId' )
+            ->where('users.id' , "=",  Auth::user()->id)
+            ->select('posts.*')
+            ->get();
+
+        // convert the two arrays
+        foreach($postsUser as $post){
+            $posts[]= $post;
+        }
+
+
+        return response()->json(
+            [
+                'posts' => $posts
+
+            ], 200
+        );
+
     }
 
     /**
