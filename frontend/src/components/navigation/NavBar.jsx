@@ -1,4 +1,4 @@
-import  { Fragment, useEffect } from 'react'
+import  { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {  Menu, Transition } from '@headlessui/react'
 import {Link, useNavigate} from "react-router-dom"
@@ -16,11 +16,17 @@ function NavBar() {
     const user = useSelector(state => state.user.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [activeLink, setActiveLink] = useState(window.location.pathname)
 
     const logout = ()=>{
         dispatch(Logout())
         navigate('/login')
     }   
+
+    useEffect(()=>{
+        setActiveLink(window.location.pathname)
+    }, [])
+
 
     return (
         <div className='bg-white dark:bg-gray-800 px-4 py-3 m-0 text-gray-900 dark:text-gray-100'>
@@ -35,10 +41,10 @@ function NavBar() {
                         (user && user != 'Unauthenticated.') && (
                             <div className="grid grid-cols-3 gap-6 ">
                                 <div className="flex items-center justify-center">
-                                    <Link to='' >Home</Link>
+                                    <Link to='/' onClick={()=>setActiveLink('/')} className={activeLink =='/' ? "border-b-2 text-[#2792FF] border-b-[#2792FF] font-medium":'opacity-75 hover:opacity-100'}>Home</Link>
                                 </div>
                                 <div className="flex items-center justify-center">
-                                    <Link to='' >Friends</Link>
+                                    <Link to='/friends' onClick={()=>setActiveLink('/friends')}   className={activeLink =='/friends' ? "border-b-2 text-[#2792FF] border-b-[#2792FF] font-medium":'opacity-75 hover:opacity-100'} >Friends</Link>
                                 </div>
                                 <div className="relative flex items-center justify-between">
                                     <text className="mr-2">

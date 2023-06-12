@@ -16,10 +16,8 @@ function Home() {
       navigate('/login')
     }else{
       setUserData(user)
-      console.log('hello')
     }
-  })
-  console.log(user)
+  },[user])
 
   return (
     user ? (
