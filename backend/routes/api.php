@@ -20,6 +20,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::middleware(['auth'])->group( function(){
     Route::resource('posts', PostsController::class );
+    Route::get('users', [PostsController::class , 'getUsers']);
 });
 
 // Route::resource('posts', PostsController::class )->middleware('auth');

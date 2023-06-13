@@ -42,7 +42,7 @@ function LoginForm() {
   return (
     <div className="flex items-center h-full mt-16" >
       <div className="w-full flex justify-center items-center">
-        <form className="mx-auto rounded-lg w-[500px] border border-gray-400 px-10 py-5 " onSubmit={handlSubmit}> 
+        <form className="mx-auto rounded-lg w-[500px] border border-gray-400 px-10 py-5 bg-white dark:bg-gray-800" onSubmit={handlSubmit}> 
           <div className="flex justify-center mb-4">
             <h4 className="text-2xl font-medium">Login</h4>
           </div>

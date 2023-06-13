@@ -3,7 +3,8 @@ import {createSlice} from "@reduxjs/toolkit"
 import axios from '../../Api/Axios'
 const initialState = {
     user : null,
-    errors : []
+    errors : [],
+    users : null
 }
 
 const csrf = () => axios.get('sanctum/csrf-cookie') 
@@ -18,6 +19,9 @@ export const UserReducer = createSlice(
             },
             getErrors : (state, action)=>{
                 state.errors = action.payload
+            },
+            listUsers : (state, action)=>{
+                state.users = action.payload
             }
         }
    }
@@ -66,5 +70,16 @@ export const Logout = ()=>async(dispatch)=>{
     }
 }
 
-export const {getData, getErrors} = UserReducer.actions
+
+export const getUsers = ()=>async(dispatch)=>{
+    await csrf()
+    try{
+       const response =  await axios.get('/api/users')
+        dispatch(listUsers(response.data.users))
+    }catch(error){
+        throw new Error(error)
+    }
+}
+
+export const {getData, getErrors, listUsers} = UserReducer.actions
 export default UserReducer.reducer

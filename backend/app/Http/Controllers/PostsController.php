@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
@@ -138,5 +139,14 @@ class PostsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getUsers(){
+        $users = User::all();
+        return response()->json(
+            [
+                'users'=> $users
+            ]
+        );
     }
 }
