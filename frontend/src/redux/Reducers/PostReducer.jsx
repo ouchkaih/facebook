@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../Api/Axios";
+import { csrf } from "../../Api/Csrf";
 
 const initialState = {
     posts : null,
@@ -50,6 +51,16 @@ export const getPostLikes = ()=>async(dispatch)=>{
     try{
         const response =await axios.get('api/likes')
         dispatch(getLikes(response.data.likes))
+    }catch(error){
+        throw new Error(error)
+    }
+}
+
+export const likePost = (id) => async(dispatch)=>{
+    // await csrf()
+    try{
+        await axios.post('api/likes', id)
+        dispatch(getPostLikes())
     }catch(error){
         throw new Error(error)
     }

@@ -37,7 +37,7 @@ function Home() {
     if(!posts){
       dispatch(fetchData())
     }
-  },[])
+  },[posts])
 
   return (
     user ? (
@@ -59,7 +59,7 @@ function Home() {
               <div className="bg-white dark:bg-gray-800 rounded-lg p-7 mt-5 ">
                 {
                   (posts && likes) && posts.map((post)=>(
-                    <Post key={post.id} postData={post} likes={likes}/>
+                    <Post key={post.id} postData={post} likes={likes} user={user} users={users}/>
                   ))
                 }
               </div>

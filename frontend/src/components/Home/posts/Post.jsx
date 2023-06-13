@@ -3,17 +3,24 @@ import { useEffect, useState } from "react"
 import Header from "./header"
 import { getUsers } from "../../../redux/Reducers/UserReducer"
 import {BiLike, BiMessage} from 'react-icons/bi'
+import { likePost } from "../../../redux/Reducers/PostReducer"
 
-function Post({postData, likes}) {
+function Post({postData, likes, user, users}) {
 
-  const users = useSelector(state=>state.user.users)
   const dispatch = useDispatch()
   const [seeMore , setSeeMore] = useState(false)
-  useEffect(()=>{
-    if(!users){
-      dispatch(getUsers())
+
+
+
+
+  const addLike = (id)=>{
+    let exist = likes?.filter ((item)=> item.postId === id && item.userId === user.id)[0]
+    if(!exist){
+        let formData = new FormData()
+        formData.append('postId', id)
+        dispatch(likePost(formData))
     }
-  },[ users])
+  }
   return (
     <div className="rounded-lg m-3  justify-center">
         <div className="">
@@ -45,7 +52,7 @@ function Post({postData, likes}) {
 
             <div className="rounded-full bg-gray-900 px-3 py-5 grid grid-cols-2 mt-5">
                 <div className="flex justify-center">
-                    <button className="flex items-center gap-2 font-medium">
+                    <button className="flex items-center gap-2 font-medium" onClick={()=>addLike(postData.id)}>
                       <BiLike className="w-6 h-6"/>{likes?.filter(item=> item.postId === postData.id).length > 0 && likes?.filter(item=> item.postId === postData.id).length}  Likes
                     </button>
                 </div>

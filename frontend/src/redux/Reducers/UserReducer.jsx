@@ -1,13 +1,13 @@
 
 import {createSlice} from "@reduxjs/toolkit"
 import axios from '../../Api/Axios'
+import { csrf } from "../../Api/Csrf"
 const initialState = {
     user : null,
     errors : [],
     users : null
 }
 
-const csrf = () => axios.get('sanctum/csrf-cookie') 
 
 export const UserReducer = createSlice(
     {

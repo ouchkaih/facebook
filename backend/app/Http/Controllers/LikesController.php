@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Like;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LikesController extends Controller
 {
@@ -33,6 +36,31 @@ class LikesController extends Controller
     public function store(Request $request)
     {
         //
+        $validation = Validator::make($request->all(), [
+            'postId' => 'required|exists:posts,id'
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'error' => $validation->error
+            ], 400);
+        }
+       
+        // check if the post already liked by the user
+        $post = DB::table('likes')
+            ->where('likes.userId' , Auth::user()->id)
+            ->where('likes.postId', $request->input('postId'))
+            ->get();
+
+        if(!sizeOf($post)){
+            $data["postId"] = $request->input('postId');
+            $data['userId']=  Auth::user()->id;
+            Like::create($data);
+        }
+
+        return response()->json([
+            'success'=> true
+        ]);
     }
 
     /**
