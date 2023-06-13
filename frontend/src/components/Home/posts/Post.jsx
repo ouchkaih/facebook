@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import Header from "./header"
 import { getUsers } from "../../../redux/Reducers/UserReducer"
+import {BiLike, BiMessage} from 'react-icons/bi'
 
 function Post({postData}) {
 
@@ -41,7 +42,19 @@ function Post({postData}) {
                     )
                 }
             <div className="rounded-lg w-full h-[500px] overflow-hidden bg-cover bg-red-400 mt-3" style={{backgroundImage:`url(./images/posts/${postData.picture})`}} ></div>
-            
+
+            <div className="rounded-full bg-gray-900 px-3 py-5 grid grid-cols-2 mt-5">
+                <div className="flex justify-center">
+                    <button className="flex items-center gap-2 font-medium">
+                      <BiLike className="w-6 h-6"/> 24  Likes
+                    </button>
+                </div>
+                <div className="flex justify-center">
+                <button className="flex items-center gap-2 font-medium">
+                      <BiMessage className="w-6 h-6"/>  Comments
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
   )
