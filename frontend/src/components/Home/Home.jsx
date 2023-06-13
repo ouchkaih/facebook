@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Header from "./posts/header"
 import AddPost from "./posts/AddPost"
 import { fetchData } from "../../redux/Reducers/PostReducer"
+import Post from "./posts/Post"
 
 
 function Home() {
@@ -14,7 +15,6 @@ function Home() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  console.log(users)
   useEffect(()=>{
     if(!user , !users){
       dispatch(getUser())
@@ -34,7 +34,7 @@ function Home() {
   return (
     user ? (
       <div>
-        <div className="grid grid-cols-4 gap-2 pt-2">
+        <div className="grid grid-cols-4 gap-10 pt-2">
           <div className="col-span-1">
             hello
           </div>
@@ -51,22 +51,7 @@ function Home() {
               <div className="bg-white dark:bg-gray-800 rounded-lg p-7 mt-5 ">
                 {
                   posts && posts.map((post)=>(
-                    <div key={post.id} className="rounded-lg m-3 flex justify-center">
-                      <div className="">
-                        {/* user Data  */}
-                        <div>
-                          {
-                            users?.filter(u => u.id === post.userId)[0].firstName
-                          }
-                        </div>
-                          <div className="rounded-lg  w-96 h-[400px] overflow-hidden bg-cover bg-red-400" style={{backgroundImage:`url(./images/posts/${post.picture})`}} ></div>
-                          <div>
-                            {
-                              post.picture
-                            }
-                          </div>
-                      </div>
-                    </div>
+                    <Post key={post.id} postData={post}/>
                   ))
                 }
               </div>
