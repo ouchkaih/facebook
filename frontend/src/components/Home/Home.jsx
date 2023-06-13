@@ -4,7 +4,7 @@ import { getUser, getUsers } from "../../redux/Reducers/UserReducer"
 import { Link, useNavigate } from "react-router-dom"
 import Header from "./posts/header"
 import AddPost from "./posts/AddPost"
-import { fetchData } from "../../redux/Reducers/PostReducer"
+import { fetchData, getPostLikes } from "../../redux/Reducers/PostReducer"
 import Post from "./posts/Post"
 
 
@@ -12,6 +12,7 @@ function Home() {
   const user = useSelector(state=> state.user.user)
   const users = useSelector(state=>state.user.users)
   const posts = useSelector(state=> state.post.posts)
+  const likes = useSelector(state=> state.post.likes)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -23,6 +24,13 @@ function Home() {
       navigate('/login')
     }
   },[user, users])
+
+  // get like Data
+  useEffect(()=>{
+    if(!likes){
+      dispatch(getPostLikes())
+    }
+  }, [likes])
 
 
   useEffect(()=>{
@@ -50,8 +58,8 @@ function Home() {
               </div>
               <div className="bg-white dark:bg-gray-800 rounded-lg p-7 mt-5 ">
                 {
-                  posts && posts.map((post)=>(
-                    <Post key={post.id} postData={post}/>
+                  (posts && likes) && posts.map((post)=>(
+                    <Post key={post.id} postData={post} likes={likes}/>
                   ))
                 }
               </div>

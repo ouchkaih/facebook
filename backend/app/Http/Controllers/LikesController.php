@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Like;
 
 class LikesController extends Controller
 {
@@ -12,6 +13,10 @@ class LikesController extends Controller
     public function index()
     {
         //
+        $likes = Like::all();
+        return response()->json(
+            ['likes' => $likes]
+        );
     }
 
     /**

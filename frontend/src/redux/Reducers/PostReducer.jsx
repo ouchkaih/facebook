@@ -3,7 +3,8 @@ import axios from "../../Api/Axios";
 
 const initialState = {
     posts : null,
-    errors : null
+    errors : null,
+    likes : null
 }
 
 
@@ -17,6 +18,9 @@ export const PostReducer = createSlice({
         },
         handlErrors : (state, action )=>{
             state.errors = action.payload
+        }, 
+        getLikes : (state, action )=>{
+            state.likes = action.payload
         }
     }
 })
@@ -42,5 +46,14 @@ export const CreatePost = (data)=>async(dispatch)=>{
     }
 }
 
-export const {getData, handlErrors} = PostReducer.actions
+export const getPostLikes = ()=>async(dispatch)=>{
+    try{
+        const response =await axios.get('api/likes')
+        dispatch(getLikes(response.data.likes))
+    }catch(error){
+        throw new Error(error)
+    }
+}
+
+export const {getData, handlErrors, getLikes} = PostReducer.actions
 export default PostReducer.reducer
