@@ -4,7 +4,6 @@ function Header({user, date}) {
   const DateNow = new Date()
 
   let dateDiff =( DateNow -  new Date(date))/1000
-  console.log(Math.floor(dateDiff/60/60/24) < 7)
   let timePosted = ''
 
   if (Math.floor(dateDiff) < 60) {

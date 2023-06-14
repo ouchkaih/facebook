@@ -5,7 +5,8 @@ import { csrf } from "../../Api/Csrf"
 const initialState = {
     user : null,
     errors : [],
-    users : null
+    users : null,
+    authed : true,
 }
 
 
@@ -22,6 +23,10 @@ export const UserReducer = createSlice(
             },
             listUsers : (state, action)=>{
                 state.users = action.payload
+            },
+            setAuthed : (state, action)=>{
+                state.authed = action.payload
+                console.log(action.payload)
             }
         }
    }
@@ -33,10 +38,9 @@ export const getUser = ()=>async(dispatch)=>{
     try{
         const response = await axios.get('api/user');
         dispatch(getData(response.data))
-        console.log(response.data)
+        dispatch(setAuthed(true))
     }catch(error){
-        console.log()
-        dispatch(getData(error.response.data.message))
+        dispatch(setAuthed(false))
     }
 }
 
@@ -54,7 +58,8 @@ export const Register = (data)=>async(dispatch)=>{
     await csrf()
     try{
         await axios.post('/register' , data);
-       getUser()
+        dispatch(getUser())
+        alert('registred succesfully')
     }catch(errors){
         dispatch(getErrors(errors.response.data.errors))
     }    
@@ -81,5 +86,5 @@ export const getUsers = ()=>async(dispatch)=>{
     }
 }
 
-export const {getData, getErrors, listUsers} = UserReducer.actions
+export const {getData, getErrors, listUsers, setAuthed} = UserReducer.actions
 export default UserReducer.reducer

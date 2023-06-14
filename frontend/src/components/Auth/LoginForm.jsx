@@ -6,6 +6,7 @@ function LoginForm() {
   const [userData , setUserData ] = useState()
   const errors = useSelector(state=> state.user.errors)
   const user = useSelector(state=> state.user.user)
+  const authed = useSelector(state=> state.user.authed)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handlChange = (e)=>{
@@ -21,12 +22,13 @@ function LoginForm() {
   
 
   useEffect(()=>{
-    if(user && user != 'Unauthenticated.'){
-      navigate('/')
-    }else if(!user){
-      dispatch(getUser())
+    if(authed){
+      if(user){
+        navigate('/')
+      }else if(!user){
+        dispatch(getUser())
+      }
     }
-    console.log(user)
   }, [user])
 
 

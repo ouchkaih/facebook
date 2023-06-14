@@ -3,23 +3,39 @@ import { useEffect, useState } from "react"
 import Header from "./header"
 import { getUsers } from "../../../redux/Reducers/UserReducer"
 import {BiLike, BiMessage} from 'react-icons/bi'
-import { likePost } from "../../../redux/Reducers/PostReducer"
+import {AiTwotoneLike} from 'react-icons/ai'
+import { deslikePost, likePost } from "../../../redux/Reducers/PostReducer"
 
 function Post({postData, likes, user, users}) {
 
   const dispatch = useDispatch()
   const [seeMore , setSeeMore] = useState(false)
+  const [likesNum , setLikesNum ] = useState()
+  const [userLiked , setUserLiked ] = useState(likes?.filter ((item)=> item.postId === postData.id && item.userId === user.id)[0] ? true : false)
 
+//   if(likes){
+//     setLikesNum(likes?.filter(item=> item.postId === postData.id).length)
+//   }
 
-
+    useEffect(()=>{
+        setLikesNum(likes?.filter(item=> item.postId === postData.id).length)
+    }, [likes])
 
   const addLike = (id)=>{
-    let exist = likes?.filter ((item)=> item.postId === id && item.userId === user.id)[0]
-    if(!exist){
+    setLikesNum(likesNum+1)
+    if(!userLiked){
         let formData = new FormData()
         formData.append('postId', id)
         dispatch(likePost(formData))
     }
+    setUserLiked(true)
+  }
+
+  const deslike = (id)=>{
+    setLikesNum(likesNum-1)
+    dispatch(deslikePost(id))
+    setUserLiked(false)
+
   }
   return (
     <div className="rounded-lg m-3  justify-center">
@@ -52,9 +68,17 @@ function Post({postData, likes, user, users}) {
 
             <div className="rounded-full bg-gray-900 px-3 py-5 grid grid-cols-2 mt-5">
                 <div className="flex justify-center">
-                    <button className="flex items-center gap-2 font-medium" onClick={()=>addLike(postData.id)}>
-                      <BiLike className="w-6 h-6"/>{likes?.filter(item=> item.postId === postData.id).length > 0 && likes?.filter(item=> item.postId === postData.id).length}  Likes
-                    </button>
+                    {
+                        userLiked ? (
+                            <button className="flex items-center gap-2 font-medium" onClick={()=>deslike(postData.id)}>
+                                <AiTwotoneLike className="w-6 h-6"/>{likesNum > 0 && likesNum}  Likes
+                            </button>
+                        ):(
+                            <button className="flex items-center gap-2 font-medium" onClick={()=>addLike(postData.id)}>
+                                <BiLike className="w-6 h-6"/>{likesNum > 0 && likesNum}  Likes
+                            </button>
+                        )
+                    }
                 </div>
                 <div className="flex justify-center">
                 <button className="flex items-center gap-2 font-medium">

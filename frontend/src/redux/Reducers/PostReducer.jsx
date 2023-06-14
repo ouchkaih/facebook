@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "../../Api/Axios";
-import { csrf } from "../../Api/Csrf";
 
 const initialState = {
     posts : null,
@@ -66,5 +65,14 @@ export const likePost = (id) => async(dispatch)=>{
     }
 }
 
+
+export const deslikePost = (id) => async(dispatch)=>{
+    try{
+        await axios.delete(`api/likes/${id}`)
+        dispatch(getPostLikes())
+    }catch(error){
+        throw new Error(error)
+    }
+}
 export const {getData, handlErrors, getLikes} = PostReducer.actions
 export default PostReducer.reducer

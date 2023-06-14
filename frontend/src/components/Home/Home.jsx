@@ -13,34 +13,43 @@ function Home() {
   const users = useSelector(state=>state.user.users)
   const posts = useSelector(state=> state.post.posts)
   const likes = useSelector(state=> state.post.likes)
+  const authed = useSelector(state=> state.user.authed)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if(!user , !users){
-      dispatch(getUser())
-      dispatch(getUsers())
-    }else if(user == "Unauthenticated."){
+    if(authed){
+      if(!user ){
+        dispatch(getUser())
+      }else{
+        if(!users){
+          dispatch(getUsers())        
+        }
+      }
+    }else{
       navigate('/login')
     }
-  },[user, users])
+  },[user, users, authed])
+  
+  
 
   // get like Data
   useEffect(()=>{
-    if(!likes){
+    if(!likes && user){
       dispatch(getPostLikes())
     }
   }, [likes])
 
 
   useEffect(()=>{
-    if(!posts){
+    if(!posts && user){
       dispatch(fetchData())
     }
-  },[posts])
+  },[posts, user])
 
+  
   return (
-    user ? (
+    (user !== "Unauthenticated." && user)? (
       <div>
         <div className="grid grid-cols-4 gap-10 pt-2">
           <div className="col-span-1">

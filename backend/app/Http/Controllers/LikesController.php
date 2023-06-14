@@ -45,7 +45,7 @@ class LikesController extends Controller
                 'error' => $validation->error
             ], 400);
         }
-       
+
         // check if the post already liked by the user
         $post = DB::table('likes')
             ->where('likes.userId' , Auth::user()->id)
@@ -93,5 +93,15 @@ class LikesController extends Controller
     public function destroy(string $id)
     {
         //
+        $post = DB::table('likes')
+            ->where('userId' , Auth::user()->id)
+            ->where('postId', $id )
+            ->get();
+
+        Like::destroy($post[0]->id);
+
+        return response()->json([
+            'success' => true
+        ], 200 );
     }
 }
