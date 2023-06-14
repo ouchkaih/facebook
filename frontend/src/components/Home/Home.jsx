@@ -35,21 +35,21 @@ function Home() {
 
   // get like Data
   useEffect(()=>{
-    if(!likes && user){
+    if(!likes ){
       dispatch(getPostLikes())
     }
   }, [likes])
 
 
   useEffect(()=>{
-    if(!posts && user){
+    if(!posts ){
       dispatch(fetchData())
     }
   },[posts, user])
 
   
   return (
-    (user !== "Unauthenticated." && user)? (
+     user? (
       <div>
         <div className="grid grid-cols-4 gap-10 pt-2">
           <div className="col-span-1">
@@ -65,13 +65,14 @@ function Home() {
                   <AddPost/>  
                 </div>
               </div>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-7 mt-5 ">
                 {
                   (posts && likes) && posts.map((post)=>(
-                    <Post key={post.id} postData={post} likes={likes} user={user} users={users}/>
+                    <div  key={post.id} className="bg-white dark:bg-gray-800 rounded-lg p-7 mt-10 ">
+                      <Post postData={post} likes={likes} user={user} users={users}/>
+                    </div>
+
                   ))
                 }
-              </div>
             </div>
           </div>
           <div className="col-span-1 bg-white dark:bg-gray-800">

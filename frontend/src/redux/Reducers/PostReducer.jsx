@@ -41,6 +41,7 @@ export const CreatePost = (data)=>async(dispatch)=>{
     try{
         await axios.post('api/posts' , data)
         dispatch(fetchData())
+        alert("")
     }catch(error){
         dispatch(handlErrors(error.response.data.errors))
     }

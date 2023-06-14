@@ -1,25 +1,23 @@
-import React from 'react'
-
 function Header({user, date}) {
   const DateNow = new Date()
-
+  console.log(date)
   let dateDiff =( DateNow -  new Date(date))/1000
   let timePosted = ''
 
   if (Math.floor(dateDiff) < 60) {
-    timePosted = Math.floor(dateDiff) + "'s";
+    timePosted = Math.floor(dateDiff) + " 's";
   } else if (Math.floor(dateDiff / 60) < 60) {
-    timePosted = Math.floor(dateDiff / 60) + "min";
+    timePosted = Math.floor(dateDiff / 60) + " min";
   } else if (Math.floor(dateDiff / 60 / 60) < 24) {
-    timePosted = Math.floor(dateDiff / 60 / 60) ;
+    timePosted = Math.floor(dateDiff / 60 / 60) + " hour";
   } else if (Math.floor(dateDiff / 60 / 60 / 24) < 4) {
-    timePosted = Math.floor(dateDiff / 60 / 60 / 24) + "day";
+    timePosted = Math.floor(dateDiff / 60 / 60 / 24) + " day";
   } else if (Math.floor(dateDiff / 60 / 60 / 24 / 4) < 4) {
-    timePosted = Math.floor(dateDiff / 60 / 60 / 24 / 4) + "week";
+    timePosted = Math.floor(dateDiff / 60 / 60 / 24 / 4) + " week";
   } else if (Math.floor(dateDiff / 60 / 60 / 24 / 4) < 12) {
-    timePosted = Math.floor(dateDiff / 60 / 60 / 24 / 4) + "month";
+    timePosted = Math.floor(dateDiff / 60 / 60 / 24 / 4) + " month";
   } else {
-    timePosted = Math.floor(dateDiff / 60 / 60 / 24 / 4 / 12) + "year";
+    timePosted = Math.floor(dateDiff / 60 / 60 / 24 / 4 / 12) + " year";
   }
   if(timePosted > 1){
     timePosted +='s'

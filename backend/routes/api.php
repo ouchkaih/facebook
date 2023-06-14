@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\FriendsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +24,7 @@ Route::middleware(['auth'])->group( function(){
     Route::resource('posts', PostsController::class );
     Route::get('users', [PostsController::class , 'getUsers']);
     Route::resource('likes', LikesController::class);
+    Route::resource('friends', FriendsController::class);
 });
 
 // Route::resource('posts', PostsController::class )->middleware('auth');

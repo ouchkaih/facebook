@@ -58,7 +58,7 @@ function NavBar() {
                                                     <span className="sr-only ">Open user menu</span>
                                                     <img
                                                     className="h-8 w-8 rounded-full"
-                                                    src={`/images/agencyProfile/${user.profileImage ?? "defaultImage.png"}`}
+                                                    src={`./images/users/${user.image ?? "defaultImage.png"}`}
                                                     alt=""
                                                     />
                                                 </Menu.Button>

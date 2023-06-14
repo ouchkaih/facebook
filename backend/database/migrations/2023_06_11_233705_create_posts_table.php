@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->timestamp('date')->default(now());
+            $table->timestamp('date')->useCurrent();
             $table->text('picture');
             $table->text('description')->nullable();
             $table->foreignId('userId');

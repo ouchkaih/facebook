@@ -8,14 +8,10 @@ import { deslikePost, likePost } from "../../../redux/Reducers/PostReducer"
 
 function Post({postData, likes, user, users}) {
 
-  const dispatch = useDispatch()
-  const [seeMore , setSeeMore] = useState(false)
-  const [likesNum , setLikesNum ] = useState()
-  const [userLiked , setUserLiked ] = useState(likes?.filter ((item)=> item.postId === postData.id && item.userId === user.id)[0] ? true : false)
-
-//   if(likes){
-//     setLikesNum(likes?.filter(item=> item.postId === postData.id).length)
-//   }
+    const dispatch = useDispatch()
+    const [seeMore , setSeeMore] = useState(false)
+    const [likesNum , setLikesNum ] = useState()
+    const [userLiked , setUserLiked ] = useState(likes?.filter ((item)=> item.postId === postData.id && item.userId === user.id)[0] ? true : false)
 
     useEffect(()=>{
         setLikesNum(likes?.filter(item=> item.postId === postData.id).length)
@@ -43,7 +39,7 @@ function Post({postData, likes, user, users}) {
             {/* user Data  */}
             <div className="mb-3">
                 {
-                    <Header user={ users?.filter(u => u.id === postData.userId)[0]} date={postData.date}/> 
+                    <Header user={ users?.filter(u => u.id === postData.userId)[0]} date={postData.created_at}/> 
                 }
             </div>
             <div className="my-3">
@@ -58,9 +54,12 @@ function Post({postData, likes, user, users}) {
                             <span className="opacity-80">
                                 {postData?.description.length > 40 && !seeMore ?  postData?.description.slice(0, 40 ) + "..." : postData?.description}                       
                             </span>
-                            <div className="text-end">
-                                <button className="text-[#2792FF]" onClick={()=> setSeeMore(!seeMore)}>{seeMore ? "See Less" : "See More"}</button>
-                            </div>
+                            {
+                                postData?.description.length > 40 &&
+                                    <div className="text-end">
+                                        <button className="text-[#2792FF]" onClick={()=> setSeeMore(!seeMore)}>{seeMore ? "See Less" : "See More"}</button>
+                                    </div>
+                            }
                         </div>
                     )
                 }
