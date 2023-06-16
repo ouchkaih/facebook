@@ -20,7 +20,7 @@ export const FriendReducer = createSlice({
 export const getFriends = ()=> async(dispatch)=>{
     try{
         const response = await axios.get('api/friends')
-        dispatch(getData(response.data))
+        dispatch(getData(response.data.friends))
     }catch(error){
         throw new Error(error)
     }

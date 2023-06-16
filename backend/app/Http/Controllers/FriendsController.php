@@ -17,6 +17,14 @@ class FriendsController extends Controller
     public function index()
     {
         //
+        $friends = DB::table('friends')
+        ->where("userId1", Auth::user()->id)
+        ->orWhere("userId2", Auth::user()->id)
+        ->get();
+
+        return response()->json(
+            ['friends'=> $friends]
+        );
     }
 
     /**

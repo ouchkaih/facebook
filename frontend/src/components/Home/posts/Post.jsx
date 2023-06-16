@@ -27,6 +27,8 @@ function Post({postData, likes, user, users}) {
     setUserLiked(true)
   }
 
+  console.log(users?.filter(u => u.id === postData.userId))
+
   const deslike = (id)=>{
     setLikesNum(likesNum-1)
     dispatch(deslikePost(id))
@@ -39,7 +41,7 @@ function Post({postData, likes, user, users}) {
             {/* user Data  */}
             <div className="mb-3">
                 {
-                    <Header user={ users?.filter(u => u.id === postData.userId)[0]} date={postData.created_at}/> 
+                    <Header user={ users?.filter(u => u.id === postData.userId)[0] || user} date={postData.created_at}/> 
                 }
             </div>
             <div className="my-3">

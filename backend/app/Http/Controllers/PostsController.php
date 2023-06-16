@@ -142,7 +142,7 @@ class PostsController extends Controller
     }
 
     public function getUsers(){
-        $users = User::all();
+        $users = User::where('id' , "<>", Auth::user()->id)->get();
         return response()->json(
             [
                 'users'=> $users

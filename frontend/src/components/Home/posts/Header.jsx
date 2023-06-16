@@ -1,8 +1,8 @@
 function Header({user, date}) {
   const DateNow = new Date()
-  console.log(date)
   let dateDiff =( DateNow -  new Date(date))/1000
   let timePosted = ''
+  console.log(user)
 
   if (Math.floor(dateDiff) < 60) {
     timePosted = Math.floor(dateDiff) + " 's";
